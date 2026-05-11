@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brazilian Açaí – Order Online</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --purple:#4a1472; --purple-dark:#2d0a47; --purple-light:#7b2fbe;
+    --gold:#f5c800; --gold-dark:#d4a800; --green:#1a6b2a; --cream:#fff8ee;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'Nunito',sans-serif;background:var(--cream);color:#2a0a3a;overflow-x:hidden;}
+
+  /* LANG BAR */
+  .lang-bar{background:var(--purple-dark);display:flex;justify-content:center;gap:8px;padding:10px 16px;position:sticky;top:0;z-index:200;box-shadow:0 2px 12px rgba(0,0,0,0.4);}
+  .lang-btn{background:rgba(255,255,255,0.1);border:2px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.7);border-radius:50px;padding:7px 16px;font-family:'Nunito',sans-serif;font-size:0.85rem;font-weight:800;cursor:pointer;display:flex;align-items:center;gap:6px;transition:all 0.2s;white-space:nowrap;}
+  .lang-btn:hover{background:rgba(255,255,255,0.18);color:#fff;}
+  .lang-btn.active{background:var(--gold);border-color:var(--gold);color:var(--purple-dark);}
+
+  /* HERO */
+  .hero{background:linear-gradient(135deg,#2d0a47 0%,#4a1472 50%,#1a0030 100%);position:relative;overflow:hidden;padding:0 20px 50px;text-align:center;}
+  .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 70% 40%,rgba(245,200,0,0.12) 0%,transparent 70%),radial-gradient(ellipse at 20% 80%,rgba(123,47,190,0.3) 0%,transparent 60%);}
+  .hero-top{display:flex;justify-content:space-between;align-items:center;padding:18px 10px 0;position:relative;z-index:2;}
+  .flag{font-size:2rem;}
+  .phone-pill{background:var(--green);color:#fff;border-radius:50px;padding:8px 18px;font-size:0.85rem;font-weight:800;display:flex;align-items:center;gap:6px;text-decoration:none;box-shadow:0 4px 15px rgba(0,0,0,0.3);transition:transform 0.2s;}
+  .phone-pill:hover{transform:scale(1.05);}
+  .logo-area{position:relative;z-index:2;margin-top:20px;}
+  .logo-text{font-family:'Bebas Neue',sans-serif;line-height:0.9;}
+  .logo-text .line1{font-size:clamp(3rem,12vw,6rem);color:var(--gold);text-shadow:3px 3px 0 #a07000,6px 6px 20px rgba(0,0,0,0.5);display:block;}
+  .logo-text .line2{font-size:clamp(3.5rem,14vw,7.5rem);color:#fff;text-shadow:3px 3px 0 #4a1472,6px 6px 20px rgba(0,0,0,0.5);display:block;letter-spacing:2px;}
+  .tagline{color:rgba(255,255,255,0.8);font-size:1rem;font-weight:700;margin-top:8px;letter-spacing:2px;text-transform:uppercase;}
+  .promo-badge{display:inline-block;background:linear-gradient(135deg,var(--gold),#ff9500);color:var(--purple-dark);font-weight:900;font-size:0.9rem;padding:10px 22px;border-radius:50px;margin-top:20px;box-shadow:0 4px 20px rgba(245,200,0,0.4);animation:pulse 2s infinite;text-transform:uppercase;letter-spacing:1px;}
+  @keyframes pulse{0%,100%{box-shadow:0 4px 20px rgba(245,200,0,0.4);}50%{box-shadow:0 4px 35px rgba(245,200,0,0.7);}}
+
+  /* PROMO BAR */
+  .promo-bar{background:linear-gradient(135deg,var(--gold),#ff9500);padding:18px 20px;text-align:center;position:relative;overflow:hidden;}
+  .promo-bar::before{content:'🎉';font-size:5rem;position:absolute;left:-10px;top:50%;transform:translateY(-50%);opacity:.15;}
+  .promo-bar::after{content:'🎉';font-size:5rem;position:absolute;right:-10px;top:50%;transform:translateY(-50%) scaleX(-1);opacity:.15;}
+  .promo-bar h3{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;color:var(--purple-dark);letter-spacing:1px;}
+  .promo-bar p{font-size:0.9rem;font-weight:700;color:var(--purple-dark);margin-top:4px;}
+
+  /* SECTION */
+  .section{max-width:720px;margin:0 auto;padding:0 16px;}
+
+  /* STEP LABELS */
+  .step-label{display:flex;align-items:center;gap:12px;margin:32px 0 14px;}
+  .step-num{background:var(--purple);color:var(--gold);width:38px;height:38px;border-radius:50%;font-family:'Bebas Neue',sans-serif;font-size:1.4rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 3px 10px rgba(74,20,114,0.3);}
+  .step-title{font-family:'Bebas Neue',sans-serif;font-size:1.7rem;color:var(--purple);letter-spacing:1px;}
+  .step-sub{font-size:0.82rem;color:#888;font-weight:600;margin-left:auto;white-space:nowrap;}
+
+  /* SIZE CARDS */
+  .size-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  .size-card{border:2.5px solid #ddd;border-radius:18px;padding:20px 16px;text-align:center;cursor:pointer;background:#fff;transition:all 0.25s;position:relative;overflow:hidden;}
+  .size-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--purple),var(--purple-light));opacity:0;transition:opacity 0.25s;}
+  .size-card.selected{border-color:var(--purple);}
+  .size-card.selected::before{opacity:1;}
+  .size-card.selected .size-oz,.size-card.selected .size-price,.size-card.selected .size-desc{color:#fff;}
+  .size-emoji{font-size:2.2rem;margin-bottom:6px;position:relative;z-index:1;}
+  .size-oz{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;color:var(--purple);position:relative;z-index:1;}
+  .size-price{font-size:1.4rem;font-weight:900;color:var(--gold-dark);position:relative;z-index:1;}
+  .size-card.selected .size-price{color:var(--gold);}
+  .size-desc{font-size:0.78rem;color:#888;font-weight:600;margin-top:4px;position:relative;z-index:1;}
+
+  /* CHIPS */
+  .chip-grid{display:flex;flex-wrap:wrap;gap:10px;}
+  .chip{border:2px solid #ddd;border-radius:50px;padding:9px 16px;cursor:pointer;background:#fff;font-size:0.88rem;font-weight:700;display:flex;align-items:center;gap:6px;transition:all 0.2s;user-select:none;color:#444;}
+  .chip:hover{border-color:var(--purple-light);color:var(--purple);}
+  .chip.selected{background:var(--purple);border-color:var(--purple);color:#fff;}
+  .chip.extra{border-style:dashed;border-color:#c0a0e0;color:var(--purple-light);}
+  .chip.extra.selected{background:var(--purple-light);border-color:var(--purple-light);border-style:solid;color:#fff;}
+  .chip-icon{font-size:1.1rem;}
+  .max-note{font-size:0.78rem;color:#9a7ab0;font-weight:700;margin-top:10px;display:block;}
+
+  /* SPECIAL NOTE */
+  textarea{border:2px solid #e0d0f0;border-radius:12px;padding:12px 14px;font-family:'Nunito',sans-serif;font-size:0.95rem;font-weight:600;color:#2a0a3a;background:#fff;width:100%;transition:border-color 0.2s;outline:none;resize:none;height:80px;}
+  textarea:focus{border-color:var(--purple);}
+
+  /* ADD TO CART BTN */
+  .btn-add{
+    width:100%;background:linear-gradient(135deg,var(--purple),var(--purple-light));
+    color:#fff;font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:2px;
+    padding:18px;border-radius:18px;border:none;cursor:pointer;margin-top:24px;
+    box-shadow:0 8px 25px rgba(74,20,114,0.4);transition:all 0.25s;
+    display:flex;align-items:center;justify-content:center;gap:10px;
+  }
+  .btn-add:hover{transform:translateY(-2px);box-shadow:0 12px 35px rgba(74,20,114,0.5);}
+  .btn-add:active{transform:translateY(0);}
+
+  /* CART SECTION */
+  .cart-section{background:#fff;border-radius:20px;border:2px solid #e0d0f0;margin-top:10px;overflow:hidden;}
+  .cart-header{background:linear-gradient(135deg,var(--purple-dark),var(--purple));color:#fff;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;}
+  .cart-header-title{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;color:var(--gold);letter-spacing:1px;display:flex;align-items:center;gap:10px;}
+  .cart-count{background:var(--gold);color:var(--purple-dark);border-radius:50%;width:28px;height:28px;display:inline-flex;align-items:center;justify-content:center;font-size:0.9rem;font-weight:900;}
+  .cart-empty{padding:24px;text-align:center;color:#aaa;font-style:italic;font-size:0.9rem;}
+
+  /* CART ITEMS */
+  .cart-item{padding:14px 20px;border-bottom:1px solid #f0e9f7;display:flex;align-items:flex-start;gap:14px;}
+  .cart-item:last-child{border-bottom:none;}
+  .cart-item-num{background:var(--purple);color:var(--gold);width:30px;height:30px;border-radius:50%;font-family:'Bebas Neue',sans-serif;font-size:1.1rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;}
+  .cart-item-body{flex:1;}
+  .cart-item-title{font-weight:900;font-size:0.95rem;color:var(--purple);}
+  .cart-item-details{font-size:0.8rem;color:#666;font-weight:600;margin-top:3px;line-height:1.5;}
+  .cart-item-price{font-weight:900;font-size:1rem;color:var(--purple);white-space:nowrap;}
+  .cart-item-right{display:flex;flex-direction:column;align-items:flex-end;gap:8px;}
+  .btn-remove{background:none;border:none;cursor:pointer;color:#ccc;font-size:1.1rem;padding:0;transition:color 0.2s;line-height:1;}
+  .btn-remove:hover{color:#e74c3c;}
+
+  /* CUSTOMER INFO */
+  .info-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  @media(max-width:500px){.info-grid{grid-template-columns:1fr;}}
+  .field-wrap{display:flex;flex-direction:column;gap:6px;}
+  .field-wrap.full{grid-column:1/-1;}
+  label{font-size:0.82rem;font-weight:800;color:#555;letter-spacing:0.5px;text-transform:uppercase;}
+  input{border:2px solid #e0d0f0;border-radius:12px;padding:12px 14px;font-family:'Nunito',sans-serif;font-size:0.95rem;font-weight:600;color:#2a0a3a;background:#fff;width:100%;transition:border-color 0.2s;outline:none;}
+  input:focus{border-color:var(--purple);}
+
+  /* ORDER TOTAL BAR */
+  .order-total-bar{background:linear-gradient(135deg,var(--purple-dark),var(--purple));border-radius:20px;padding:20px 24px;margin-top:20px;}
+  .order-total-row{display:flex;justify-content:space-between;font-size:0.9rem;padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.1);font-weight:600;color:#fff;}
+  .order-total-row:last-child{border-bottom:none;}
+  .order-grand-total{display:flex;justify-content:space-between;font-size:1.4rem;font-weight:900;margin-top:14px;padding-top:14px;border-top:2px solid rgba(255,255,255,0.3);color:var(--gold);}
+  .order-promo-note{color:var(--gold);font-size:0.85rem;font-weight:800;margin-top:8px;text-align:center;}
+
+  /* SUBMIT BUTTONS */
+  .btn-wa{display:flex;width:100%;background:linear-gradient(135deg,#25d366,#128c4a);color:#fff;font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:2px;padding:20px;border-radius:18px;border:none;cursor:pointer;margin-top:16px;box-shadow:0 8px 30px rgba(37,211,102,0.4);transition:all 0.25s;align-items:center;justify-content:center;gap:10px;text-decoration:none;}
+  .btn-wa:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(37,211,102,0.5);}
+  .btn-call{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;background:rgba(255,255,255,0.12);color:#fff;font-family:'Bebas Neue',sans-serif;font-size:1.2rem;letter-spacing:2px;padding:16px;border-radius:14px;border:2px solid rgba(255,255,255,0.3);cursor:pointer;margin-top:10px;transition:all 0.25s;text-decoration:none;}
+  .btn-call:hover{background:rgba(255,255,255,0.2);}
+
+  /* DIVIDER */
+  .form-divider{border:none;height:2px;background:linear-gradient(90deg,transparent,#ddd,transparent);margin:10px 0;}
+
+  /* FOOTER */
+  footer{background:var(--purple-dark);color:rgba(255,255,255,0.6);text-align:center;padding:30px 20px;font-size:0.82rem;margin-top:60px;}
+  footer strong{color:var(--gold);}
+
+  /* TOAST */
+  .notif{position:fixed;top:20px;left:50%;transform:translateX(-50%) translateY(-80px);background:var(--green);color:#fff;padding:14px 28px;border-radius:50px;font-weight:800;font-size:0.95rem;z-index:9999;transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1);box-shadow:0 8px 30px rgba(0,0,0,0.3);white-space:nowrap;}
+  .notif.show{transform:translateX(-50%) translateY(0);}
+
+  /* BOWL BUILDER CARD */
+  .builder-card{background:#fff;border-radius:20px;border:2px solid #e0d0f0;padding:4px 0 20px;margin-top:16px;}
+  .builder-card-header{background:linear-gradient(135deg,var(--purple),var(--purple-light));border-radius:16px 16px 0 0;padding:14px 20px;margin-bottom:4px;}
+  .builder-card-header h3{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;color:var(--gold);letter-spacing:1px;}
+  .builder-card-header p{font-size:0.82rem;color:rgba(255,255,255,0.75);font-weight:600;}
+  .builder-inner{padding:0 20px;}
+</style>
+</head>
+<body>
+
+<!-- LANGUAGE BAR -->
+<div class="lang-bar">
+  <button class="lang-btn active" onclick="setLang('en')">🇺🇸 English</button>
+  <button class="lang-btn" onclick="setLang('es')">🇪🇸 Español</button>
+  <button class="lang-btn" onclick="setLang('pt')">🇧🇷 Português</button>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-top">
+    <span class="flag">🇧🇷</span>
+    <a href="tel:+14252076217" class="phone-pill">📞 (425) 207-6217</a>
+  </div>
+  <div class="logo-area">
+    <div class="logo-text">
+      <span class="line1">Brazilian</span>
+      <span class="line2">AÇAÍ</span>
+    </div>
+    <p class="tagline" data-i18n="tagline">Fresh · Natural · Made with Love</p>
+    <div class="promo-badge" data-i18n="promoBadge">🎉 Weekend: Buy 3 Get 1 Free!</div>
+  </div>
+</div>
+
+<!-- PROMO BAR -->
+<div class="promo-bar">
+  <h3 data-i18n="promoTitle">🏆 WEEKEND PROMOTION!</h3>
+  <p data-i18n="promoDesc">Buy 3 Açaí 16oz – Get 1 FREE! Mix as you like! Valid Sat &amp; Sun only.</p>
+</div>
+
+<div class="section" style="padding-bottom:60px;">
+
+  <!-- ── BOWL BUILDER ── -->
+  <div class="step-label" style="margin-top:30px;">
+    <div class="step-num">🥤</div>
+    <span class="step-title" data-i18n="builderTitle">Build Your Açaí Bowl</span>
+  </div>
+
+  <div class="builder-card">
+    <div class="builder-card-header">
+      <h3 data-i18n="builderHeading">Customize Your Bowl</h3>
+      <p data-i18n="builderSub">Fill in options below, then tap "Add to Cart". Repeat for each bowl!</p>
+    </div>
+    <div class="builder-inner">
+
+      <!-- SIZE -->
+      <div class="step-label"><div class="step-num">1</div><span class="step-title" data-i18n="step1">Choose Size</span></div>
+      <div class="size-grid">
+        <div class="size-card" data-size="16oz" data-price="14.99" onclick="selectSize(this)">
+          <div class="size-emoji">🥤</div>
+          <div class="size-oz">16 oz</div>
+          <div class="size-price">$14.99</div>
+          <div class="size-desc" data-i18n="sizeDesc">3 toppings included</div>
+        </div>
+        <div class="size-card" data-size="12oz" data-price="11.99" onclick="selectSize(this)">
+          <div class="size-emoji">🧋</div>
+          <div class="size-oz">12 oz</div>
+          <div class="size-price">$11.99</div>
+          <div class="size-desc" data-i18n="sizeDesc">3 toppings included</div>
+        </div>
+      </div>
+
+      <!-- FRUITS -->
+      <div class="step-label"><div class="step-num">2</div><span class="step-title" data-i18n="step3">Fresh Fruits</span><span class="step-sub" data-i18n="upTo3">Choose up to 3</span></div>
+      <div class="chip-grid" id="fruits">
+        <div class="chip" data-group="fruits" onclick="toggleChip(this,'fruits',3)"><span class="chip-icon">🍓</span><span data-i18n="fruit1">Strawberry</span></div>
+        <div class="chip" data-group="fruits" onclick="toggleChip(this,'fruits',3)"><span class="chip-icon">🍌</span><span data-i18n="fruit2">Banana</span></div>
+        <div class="chip" data-group="fruits" onclick="toggleChip(this,'fruits',3)"><span class="chip-icon">🥝</span><span data-i18n="fruit3">Kiwi</span></div>
+        <div class="chip" data-group="fruits" onclick="toggleChip(this,'fruits',3)"><span class="chip-icon">🍇</span><span data-i18n="fruit4">Grapes</span></div>
+        <div class="chip" data-group="fruits" onclick="toggleChip(this,'fruits',3)"><span class="chip-icon">🫐</span><span data-i18n="fruit5">Blueberry</span></div>
+      </div>
+      <span class="max-note" data-i18n="extraFruitNote">* Extra fruit +$2.00 each</span>
+
+      <!-- TOPPINGS -->
+      <div class="step-label"><div class="step-num">3</div><span class="step-title" data-i18n="step4">Toppings</span><span class="step-sub" data-i18n="upTo3">Choose up to 3</span></div>
+      <div class="chip-grid" id="toppings">
+        <div class="chip" data-group="toppings" onclick="toggleChip(this,'toppings',3)"><span class="chip-icon">🌾</span><span data-i18n="top1">Granola</span></div>
+        <div class="chip" data-group="toppings" onclick="toggleChip(this,'toppings',3)"><span class="chip-icon">🥛</span><span data-i18n="top2">Powdered Milk (Leite Ninho)</span></div>
+        <div class="chip" data-group="toppings" onclick="toggleChip(this,'toppings',3)"><span class="chip-icon">🍬</span><span data-i18n="top3">Peanut Candy (Paçoca)</span></div>
+        <div class="chip" data-group="toppings" onclick="toggleChip(this,'toppings',3)"><span class="chip-icon">🍫</span><span data-i18n="top4">M&amp;M's</span></div>
+        <div class="chip" data-group="toppings" onclick="toggleChip(this,'toppings',3)"><span class="chip-icon">🍪</span><span data-i18n="top5">Oreo</span></div>
+      </div>
+      <span class="max-note" data-i18n="extraToppingNote">* Extra topping +$2.00 each</span>
+
+      <!-- SAUCES -->
+      <div class="step-label"><div class="step-num">4</div><span class="step-title" data-i18n="step5">Sauces</span><span class="step-sub" data-i18n="upTo2">Choose up to 2</span></div>
+      <div class="chip-grid" id="sauces">
+        <div class="chip" data-group="sauces" onclick="toggleChip(this,'sauces',2)"><span class="chip-icon">🍯</span><span data-i18n="sauce1">Condensed Milk</span></div>
+        <div class="chip" data-group="sauces" onclick="toggleChip(this,'sauces',2)"><span class="chip-icon">🍫</span><span data-i18n="sauce2">Chocolate Syrup</span></div>
+        <div class="chip" data-group="sauces" onclick="toggleChip(this,'sauces',2)"><span class="chip-icon">🫙</span><span data-i18n="sauce3">Nutella</span></div>
+        <div class="chip" data-group="sauces" onclick="toggleChip(this,'sauces',2)"><span class="chip-icon">🍮</span><span data-i18n="sauce4">Caramel</span></div>
+        <div class="chip" data-group="sauces" onclick="toggleChip(this,'sauces',2)"><span class="chip-icon">🍯</span><span data-i18n="sauce5">Honey</span></div>
+      </div>
+      <span class="max-note" data-i18n="extraSauceNote">* Extra sauce +$2.00 each</span>
+
+      <!-- EXTRAS -->
+      <div class="step-label"><div class="step-num">5</div><span class="step-title" data-i18n="step6">Extras <span style="font-size:1rem;font-weight:700;color:#ddd;">(+$2 ea)</span></span></div>
+      <div class="chip-grid" id="extras">
+        <div class="chip extra" data-group="extras" data-price="2" onclick="toggleChip(this,'extras',99)"><span class="chip-icon">🍓</span><span data-i18n="extra1">Extra Fruit</span></div>
+        <div class="chip extra" data-group="extras" data-price="2" onclick="toggleChip(this,'extras',99)"><span class="chip-icon">🌾</span><span data-i18n="extra2">Extra Topping</span></div>
+        <div class="chip extra" data-group="extras" data-price="2" onclick="toggleChip(this,'extras',99)"><span class="chip-icon">🍯</span><span data-i18n="extra3">Extra Sauce</span></div>
+      </div>
+
+      <!-- BOWL NOTE -->
+      <div class="step-label" style="margin-top:22px;margin-bottom:8px;"><div class="step-num">6</div><span class="step-title" data-i18n="step7">Bowl Note</span></div>
+      <textarea id="bowl-note" data-i18n-ph="specialPlaceholder" placeholder="Special request for this bowl..."></textarea>
+
+      <!-- ADD TO CART -->
+      <button class="btn-add" onclick="addToCart()">
+        <span style="font-size:1.4rem;">🛒</span>
+        <span data-i18n="btnAdd">+ Add Bowl to Cart</span>
+      </button>
+
+    </div>
+  </div>
+
+  <!-- ── CART ── -->
+  <div class="step-label" style="margin-top:36px;">
+    <div class="step-num">📋</div>
+    <span class="step-title" data-i18n="cartTitle">Your Cart</span>
+    <span class="step-sub" id="cart-count-label" style="color:var(--purple);font-weight:900;"></span>
+  </div>
+
+  <div class="cart-section" id="cart-section">
+    <div class="cart-header">
+      <div class="cart-header-title">
+        🛒 <span data-i18n="cartTitle">Your Cart</span>
+        <span class="cart-count" id="cart-badge">0</span>
+      </div>
+      <span style="color:rgba(255,255,255,0.6);font-size:0.82rem;font-weight:700;" data-i18n="cartHint">Build each bowl separately above</span>
+    </div>
+    <div id="cart-items-container">
+      <div class="cart-empty" id="cart-empty-msg" data-i18n="cartEmpty">No bowls yet. Build one above and tap "+ Add Bowl to Cart"!</div>
+    </div>
+  </div>
+
+  <!-- ── YOUR INFO ── -->
+  <div class="step-label" style="margin-top:36px;">
+    <div class="step-num">👤</div>
+    <span class="step-title" data-i18n="step8">Your Info</span>
+  </div>
+  <div class="info-grid">
+    <div class="field-wrap">
+      <label data-i18n="labelName">Name *</label>
+      <input type="text" id="cust-name" data-i18n-ph="placeholderName" placeholder="Your name">
+    </div>
+    <div class="field-wrap">
+      <label data-i18n="labelPhone">Phone</label>
+      <input type="tel" id="cust-phone" placeholder="(xxx) xxx-xxxx">
+    </div>
+    <div class="field-wrap full">
+      <label data-i18n="labelAddress">Address (for delivery)</label>
+      <input type="text" id="cust-address" data-i18n-ph="placeholderAddress" placeholder="Street address or 'Pickup'">
+    </div>
+    <div class="field-wrap full">
+      <label data-i18n="labelOrderNote">Order Note</label>
+      <input type="text" id="order-note" data-i18n-ph="placeholderOrderNote" placeholder="Any notes for the whole order...">
+    </div>
+  </div>
+
+  <!-- ── ORDER TOTAL + SEND ── -->
+  <div class="order-total-bar" id="order-total-bar" style="display:none;">
+    <div id="total-lines"></div>
+    <div class="order-grand-total">
+      <span data-i18n="totalLabel">TOTAL</span>
+      <span id="grand-total">$0.00</span>
+    </div>
+    <div class="order-promo-note" id="promo-note" style="display:none;" data-i18n="promoApplied">🎉 Weekend Promo: Buy 3 Get 1 Free!</div>
+
+    <a href="#" class="btn-wa" onclick="sendWhatsApp(event)">
+      <svg width="28" height="28" viewBox="0 0 32 32" fill="white"><path d="M16 2C8.268 2 2 8.268 2 16c0 2.4.633 4.65 1.737 6.6L2 30l7.6-1.713A13.935 13.935 0 0016 30c7.732 0 14-6.268 14-14S23.732 2 16 2zm0 25.5a11.455 11.455 0 01-5.85-1.6l-.42-.25-4.5 1.015 1.038-4.38-.275-.45A11.464 11.464 0 014.5 16C4.5 9.649 9.649 4.5 16 4.5S27.5 9.649 27.5 16 22.351 27.5 16 27.5zm6.294-8.563c-.345-.172-2.04-1.007-2.356-1.122-.316-.115-.547-.172-.777.172-.23.345-.892 1.122-1.093 1.352-.2.23-.402.259-.748.086-.345-.172-1.457-.537-2.775-1.713-1.025-.916-1.717-2.046-1.919-2.391-.2-.345-.021-.531.151-.703.155-.155.345-.402.518-.603.172-.2.23-.345.345-.575.115-.23.057-.431-.028-.603-.086-.172-.778-1.875-1.065-2.569-.28-.672-.565-.58-.778-.591l-.662-.011c-.23 0-.603.086-.92.431-.316.345-1.208 1.18-1.208 2.876s1.237 3.336 1.41 3.566c.172.23 2.435 3.719 5.9 5.214.824.355 1.468.568 1.97.727.828.263 1.581.226 2.177.137.664-.1 2.04-.834 2.327-1.638.287-.805.287-1.495.2-1.638-.086-.144-.316-.23-.662-.402z"/></svg>
+      <span data-i18n="btnWhatsapp">SEND ORDER VIA WHATSAPP</span>
+    </a>
+    <a href="tel:+14252076217" class="btn-call">
+      📞 <span data-i18n="btnCall">CALL TO ORDER: (425) 207-6217</span>
+    </a>
+  </div>
+
+</div>
+
+<footer>
+  <strong>Brazilian Açaí</strong><br>
+  📞 <a href="tel:+14252076217" style="color:var(--gold);">(425) 207-6217</a> &nbsp;|&nbsp;
+  WhatsApp: <a href="https://wa.me/14252076217" style="color:var(--gold);" data-i18n="footerChat">Chat Now</a><br><br>
+  <span style="opacity:0.5;" data-i18n="footerCopy">© 2025 Brazilian Açaí · Made with ❤️ in Brazil</span>
+</footer>
+
+<div class="notif" id="notif"></div>
+
+<script>
+// ─── TRANSLATIONS ────────────────────────────────────────────
+const T = {
+  en:{
+    tagline:"Fresh · Natural · Made with Love",
+    promoBadge:"🎉 Weekend: Buy 3 Get 1 Free!",
+    promoTitle:"🏆 WEEKEND PROMOTION!",
+    promoDesc:"Buy 3 Açaí 16oz – Get 1 FREE! Mix as you like! Valid Sat & Sun only.",
+    builderTitle:"Build Your Açaí Bowl",
+    builderHeading:"Customize Your Bowl",
+    builderSub:"Fill in options below, then tap \"Add to Cart\". Repeat for each bowl!",
+    step1:"Choose Size", step3:"Fresh Fruits", step4:"Toppings",
+    step5:"Sauces", step6:"Extras", step7:"Bowl Note", step8:"Your Info",
+    sizeDesc:"3 toppings included",
+    upTo3:"Choose up to 3", upTo2:"Choose up to 2",
+    fruit1:"Strawberry",fruit2:"Banana",fruit3:"Kiwi",fruit4:"Grapes",fruit5:"Blueberry",
+    top1:"Granola",top2:"Powdered Milk (Leite Ninho)",top3:"Peanut Candy (Paçoca)",top4:"M&M's",top5:"Oreo",
+    sauce1:"Condensed Milk",sauce2:"Chocolate Syrup",sauce3:"Nutella",sauce4:"Caramel",sauce5:"Honey",
+    extra1:"Extra Fruit",extra2:"Extra Topping",extra3:"Extra Sauce",
+    extraFruitNote:"* Extra fruit +$2.00 each",
+    extraToppingNote:"* Extra topping +$2.00 each",
+    extraSauceNote:"* Extra sauce +$2.00 each",
+    specialPlaceholder:"Special request for this bowl...",
+    btnAdd:"+ Add Bowl to Cart",
+    cartTitle:"Your Cart",
+    cartHint:"Build each bowl separately above",
+    cartEmpty:"No bowls yet. Build one above and tap \"+ Add Bowl to Cart\"!",
+    labelName:"Name *",labelPhone:"Phone",labelAddress:"Address (for delivery)",labelOrderNote:"Order Note",
+    placeholderName:"Your name",placeholderAddress:"Street address or 'Pickup'",placeholderOrderNote:"Any notes for the whole order...",
+    totalLabel:"TOTAL",
+    promoApplied:"🎉 Weekend Promo: Buy 3 Get 1 Free!",
+    btnWhatsapp:"SEND ORDER VIA WHATSAPP",
+    btnCall:"CALL TO ORDER: (425) 207-6217",
+    footerChat:"Chat Now",
+    footerCopy:"© 2025 Brazilian Açaí · Made with ❤️ in Brazil",
+    bowl:"Bowl",
+    sFruits:"Fruits",sToppings:"Toppings",sSauces:"Sauces",sExtras:"Extras",sNote:"Note",
+    msgHeader:"NEW AÇAÍ ORDER",
+    msgName:"Name",msgPhone:"Phone",msgAddress:"Address",
+    msgSize:"Size",msgFruits:"Fruits",msgToppings:"Toppings",
+    msgSauces:"Sauces",msgExtras:"Extras",msgNote:"Note",
+    msgOrderNote:"Order Note",msgTotal:"TOTAL",
+    msgPromo:"Weekend Promo: Buy 3 Get 1 Free!",msgThanks:"Thank you!",
+    errCart:"Please add at least one bowl to your cart first!",
+    errName:"Please enter your name!",
+    errSize:"Please choose a size for this bowl!",
+    errMax:"Max {n} selections for this group!",
+    notifAdded:"✅ Bowl added to cart!",
+    notifSent:"✅ Opening WhatsApp with your order!",
+    cartCountLabel:"{n} bowl(s) in cart",
+  },
+  es:{
+    tagline:"Fresco · Natural · Hecho con Amor",
+    promoBadge:"🎉 Fin de Semana: ¡Compra 3 lleva 1 gratis!",
+    promoTitle:"🏆 ¡PROMOCIÓN DE FIN DE SEMANA!",
+    promoDesc:"¡Compra 3 Açaí 16oz – lleva 1 GRATIS! ¡Mix a tu gusto! Solo sábado y domingo.",
+    builderTitle:"Arma Tu Tazón de Açaí",
+    builderHeading:"Personaliza Tu Tazón",
+    builderSub:"Completa las opciones y toca \"Agregar al carrito\". ¡Repite por cada tazón!",
+    step1:"Elige el Tamaño",step3:"Frutas Frescas",step4:"Toppings",
+    step5:"Salsas",step6:"Extras",step7:"Nota del Tazón",step8:"Tu Información",
+    sizeDesc:"3 toppings incluidos",
+    upTo3:"Elige hasta 3",upTo2:"Elige hasta 2",
+    fruit1:"Fresa",fruit2:"Banana",fruit3:"Kiwi",fruit4:"Uvas",fruit5:"Arándanos",
+    top1:"Granola",top2:"Leche en Polvo (Leite Ninho)",top3:"Dulce de Maní (Paçoca)",top4:"M&M's",top5:"Oreo",
+    sauce1:"Leche Condensada",sauce2:"Jarabe de Chocolate",sauce3:"Nutella",sauce4:"Caramelo",sauce5:"Miel",
+    extra1:"Fruta Extra",extra2:"Topping Extra",extra3:"Salsa Extra",
+    extraFruitNote:"* Fruta extra +$2.00 c/u",
+    extraToppingNote:"* Topping extra +$2.00 c/u",
+    extraSauceNote:"* Salsa extra +$2.00 c/u",
+    specialPlaceholder:"Solicitud especial para este tazón...",
+    btnAdd:"+ Agregar Tazón al Carrito",
+    cartTitle:"Tu Carrito",
+    cartHint:"Arma cada tazón por separado arriba",
+    cartEmpty:"Sin tazones aún. ¡Arma uno arriba y toca \"Agregar al Carrito\"!",
+    labelName:"Nombre *",labelPhone:"Teléfono",labelAddress:"Dirección (para entrega)",labelOrderNote:"Nota del Pedido",
+    placeholderName:"Tu nombre",placeholderAddress:"Dirección o 'Recoger en tienda'",placeholderOrderNote:"Notas para todo el pedido...",
+    totalLabel:"TOTAL",
+    promoApplied:"🎉 ¡Promo Fin de Semana: Compra 3 lleva 1 gratis!",
+    btnWhatsapp:"ENVIAR PEDIDO POR WHATSAPP",
+    btnCall:"LLAMAR PARA PEDIR: (425) 207-6217",
+    footerChat:"Chatear Ahora",
+    footerCopy:"© 2025 Brazilian Açaí · Hecho con ❤️ en Brasil",
+    bowl:"Tazón",
+    sFruits:"Frutas",sToppings:"Toppings",sSauces:"Salsas",sExtras:"Extras",sNote:"Nota",
+    msgHeader:"NUEVO PEDIDO DE AÇAÍ",
+    msgName:"Nombre",msgPhone:"Teléfono",msgAddress:"Dirección",
+    msgSize:"Tamaño",msgFruits:"Frutas",msgToppings:"Toppings",
+    msgSauces:"Salsas",msgExtras:"Extras",msgNote:"Nota",
+    msgOrderNote:"Nota del Pedido",msgTotal:"TOTAL",
+    msgPromo:"¡Promo Fin de Semana: Compra 3 lleva 1 gratis!",msgThanks:"¡Gracias!",
+    errCart:"¡Por favor agrega al menos un tazón al carrito!",
+    errName:"¡Por favor ingresa tu nombre!",
+    errSize:"¡Por favor elige un tamaño para este tazón!",
+    errMax:"¡Máximo {n} selecciones en este grupo!",
+    notifAdded:"✅ ¡Tazón agregado al carrito!",
+    notifSent:"✅ ¡Abriendo WhatsApp con tu pedido!",
+    cartCountLabel:"{n} tazón(es) en el carrito",
+  },
+  pt:{
+    tagline:"Fresco · Natural · Feito com Amor",
+    promoBadge:"🎉 Fim de Semana: Compre 3 Ganhe 1 Grátis!",
+    promoTitle:"🏆 PROMOÇÃO DE FIM DE SEMANA!",
+    promoDesc:"Compre 3 Açaí 16oz – Ganhe 1 GRÁTIS! Mix como quiser! Só sábado e domingo.",
+    builderTitle:"Monte Seu Açaí",
+    builderHeading:"Personalize Seu Copo",
+    builderSub:"Preencha as opções e toque em \"Adicionar ao Carrinho\". Repita para cada copo!",
+    step1:"Escolha o Tamanho",step3:"Frutas Frescas",step4:"Complementos",
+    step5:"Caldas",step6:"Adicionais",step7:"Obs do Copo",step8:"Seus Dados",
+    sizeDesc:"3 complementos inclusos",
+    upTo3:"Escolha até 3",upTo2:"Escolha até 2",
+    fruit1:"Morango",fruit2:"Banana",fruit3:"Kiwi",fruit4:"Uva",fruit5:"Mirtilo",
+    top1:"Granola",top2:"Leite Ninho",top3:"Paçoca",top4:"M&M's",top5:"Oreo",
+    sauce1:"Leite Condensado",sauce2:"Calda de Chocolate",sauce3:"Nutella",sauce4:"Caramelo",sauce5:"Mel",
+    extra1:"Fruta Extra",extra2:"Complemento Extra",extra3:"Calda Extra",
+    extraFruitNote:"* Fruta extra +$2,00 cada",
+    extraToppingNote:"* Complemento extra +$2,00 cada",
+    extraSauceNote:"* Calda extra +$2,00 cada",
+    specialPlaceholder:"Obs para este copo...",
+    btnAdd:"+ Adicionar Copo ao Carrinho",
+    cartTitle:"Seu Carrinho",
+    cartHint:"Monte cada copo separado acima",
+    cartEmpty:"Nenhum copo ainda. Monte um acima e toque em \"Adicionar ao Carrinho\"!",
+    labelName:"Nome *",labelPhone:"Telefone",labelAddress:"Endereço (para entrega)",labelOrderNote:"Obs do Pedido",
+    placeholderName:"Seu nome",placeholderAddress:"Endereço ou 'Retirar no local'",placeholderOrderNote:"Obs para o pedido todo...",
+    totalLabel:"TOTAL",
+    promoApplied:"🎉 Promoção Fim de Semana: Compre 3 Ganhe 1 Grátis!",
+    btnWhatsapp:"ENVIAR PEDIDO PELO WHATSAPP",
+    btnCall:"LIGAR PARA PEDIR: (425) 207-6217",
+    footerChat:"Falar Agora",
+    footerCopy:"© 2025 Brazilian Açaí · Feito com ❤️ no Brasil",
+    bowl:"Copo",
+    sFruits:"Frutas",sToppings:"Complementos",sSauces:"Caldas",sExtras:"Adicionais",sNote:"Obs",
+    msgHeader:"NOVO PEDIDO DE AÇAÍ",
+    msgName:"Nome",msgPhone:"Telefone",msgAddress:"Endereço",
+    msgSize:"Tamanho",msgFruits:"Frutas",msgToppings:"Complementos",
+    msgSauces:"Caldas",msgExtras:"Adicionais",msgNote:"Obs",
+    msgOrderNote:"Obs do Pedido",msgTotal:"TOTAL",
+    msgPromo:"Promoção Fim de Semana: Compre 3 Ganhe 1 Grátis!",msgThanks:"Obrigado!",
+    errCart:"Por favor adicione pelo menos um copo ao carrinho!",
+    errName:"Por favor informe seu nome!",
+    errSize:"Por favor escolha um tamanho para este copo!",
+    errMax:"Máximo {n} seleções neste grupo!",
+    notifAdded:"✅ Copo adicionado ao carrinho!",
+    notifSent:"✅ Abrindo WhatsApp com seu pedido!",
+    cartCountLabel:"{n} copo(s) no carrinho",
+  }
+};
+
+// ─── STATE ───────────────────────────────────────────────────
+const PHONE = '14252076217';
+let currentLang = 'en';
+let currentSize = null;
+let currentSizePrice = 0;
+let cart = [];
+
+// ─── LANGUAGE ────────────────────────────────────────────────
+function setLang(lang) {
+  currentLang = lang;
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.classList.toggle('active',
+      (lang==='en'&&btn.textContent.includes('English'))||
+      (lang==='es'&&btn.textContent.includes('Español'))||
+      (lang==='pt'&&btn.textContent.includes('Português'))
+    );
+  });
+  const t = T[lang];
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const k = el.getAttribute('data-i18n');
+    if(t[k]!==undefined) el.innerHTML = t[k];
+  });
+  document.querySelectorAll('[data-i18n-ph]').forEach(el => {
+    const k = el.getAttribute('data-i18n-ph');
+    if(t[k]!==undefined) el.placeholder = t[k];
+  });
+  renderCart();
+}
+
+// ─── SIZE SELECTION ──────────────────────────────────────────
+function selectSize(el) {
+  document.querySelectorAll('.size-card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  currentSize = el.dataset.size;
+  currentSizePrice = parseFloat(el.dataset.price);
+}
+
+// ─── CHIP TOGGLE ─────────────────────────────────────────────
+function toggleChip(el, group, max) {
+  if(el.classList.contains('selected')) {
+    el.classList.remove('selected');
+  } else {
+    const sel = document.querySelectorAll('#'+group+' .chip.selected').length;
+    if(sel >= max) { showNotif(T[currentLang].errMax.replace('{n}',max),'#e74c3c'); return; }
+    el.classList.add('selected');
+  }
+}
+
+function getSelected(groupId) {
+  return [...document.querySelectorAll('#'+groupId+' .chip.selected')].map(c => c.textContent.trim());
+}
+
+// ─── ADD TO CART ─────────────────────────────────────────────
+function addToCart() {
+  const t = T[currentLang];
+  if(!currentSize) { showNotif(t.errSize,'#e74c3c'); return; }
+
+  const fruits   = getSelected('fruits');
+  const toppings = getSelected('toppings');
+  const sauces   = getSelected('sauces');
+  const extras   = getSelected('extras');
+  const note     = document.getElementById('bowl-note').value.trim();
+  const extrasCost = extras.length * 2;
+  const price    = currentSizePrice + extrasCost;
+
+  cart.push({ size: currentSize, price: currentSizePrice, extras, extrasCost, total: price, fruits, toppings, sauces, note });
+
+  // reset builder
+  currentSize = null; currentSizePrice = 0;
+  document.querySelectorAll('.size-card').forEach(c => c.classList.remove('selected'));
+  document.querySelectorAll('.chip.selected').forEach(c => c.classList.remove('selected'));
+  document.getElementById('bowl-note').value = '';
+
+  renderCart();
+  showNotif(t.notifAdded,'#1a6b2a');
+  document.querySelector('.cart-section').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+// ─── REMOVE FROM CART ────────────────────────────────────────
+function removeFromCart(idx) {
+  cart.splice(idx,1);
+  renderCart();
+}
+
+// ─── RENDER CART ─────────────────────────────────────────────
+function renderCart() {
+  const t = T[currentLang];
+  const container = document.getElementById('cart-items-container');
+  const emptyMsg  = document.getElementById('cart-empty-msg');
+  const badge     = document.getElementById('cart-badge');
+  const countLbl  = document.getElementById('cart-count-label');
+  const totalBar  = document.getElementById('order-total-bar');
+  const totalLines= document.getElementById('total-lines');
+  const grandTotal= document.getElementById('grand-total');
+  const promoNote = document.getElementById('promo-note');
+
+  badge.textContent = cart.length;
+  countLbl.textContent = cart.length > 0 ? t.cartCountLabel.replace('{n}',cart.length) : '';
+
+  if(cart.length === 0) {
+    container.innerHTML = '<div class="cart-empty" id="cart-empty-msg">'+t.cartEmpty+'</div>';
+    totalBar.style.display = 'none';
+    return;
+  }
+
+  let html = '';
+  let grandSum = 0;
+  let linesHtml = '';
+
+  cart.forEach((item, i) => {
+    grandSum += item.total;
+    const parts = [];
+    if(item.fruits.length)   parts.push('🍓 '+t.sFruits+': '+item.fruits.join(', '));
+    if(item.toppings.length) parts.push('🌾 '+t.sToppings+': '+item.toppings.join(', '));
+    if(item.sauces.length)   parts.push('🍯 '+t.sSauces+': '+item.sauces.join(', '));
+    if(item.extras.length)   parts.push('⭐ '+t.sExtras+': '+item.extras.join(', '));
+    if(item.note)            parts.push('📝 '+t.sNote+': '+item.note);
+
+    html += '<div class="cart-item">'
+      +'<div class="cart-item-num">'+(i+1)+'</div>'
+      +'<div class="cart-item-body">'
+        +'<div class="cart-item-title">🥤 '+t.bowl+' '+(i+1)+' — '+item.size+'</div>'
+        +'<div class="cart-item-details">'+parts.join('<br>')+'</div>'
+      +'</div>'
+      +'<div class="cart-item-right">'
+        +'<div class="cart-item-price">$'+item.total.toFixed(2)+'</div>'
+        +'<button class="btn-remove" onclick="removeFromCart('+i+')" title="Remove">✕</button>'
+      +'</div>'
+    +'</div>';
+
+    linesHtml += '<div class="order-total-row"><span>'+t.bowl+' '+(i+1)+' ('+item.size+')</span><span>$'+item.total.toFixed(2)+'</span></div>';
+  });
+
+  container.innerHTML = html;
+  totalLines.innerHTML = linesHtml;
+  grandTotal.textContent = '$'+grandSum.toFixed(2);
+
+  // Weekend promo check (3+ 16oz bowls)
+  const big16 = cart.filter(b => b.size==='16oz').length;
+  if(big16 >= 3) {
+    promoNote.style.display = 'block';
+  } else {
+    promoNote.style.display = 'none';
+  }
+
+  totalBar.style.display = 'block';
+}
+
+// ─── SEND WHATSAPP ───────────────────────────────────────────
+function sendWhatsApp(e) {
+  e.preventDefault();
+  const t = T[currentLang];
+  const name    = document.getElementById('cust-name').value.trim();
+  const phone   = document.getElementById('cust-phone').value.trim();
+  const address = document.getElementById('cust-address').value.trim();
+  const orderNote = document.getElementById('order-note').value.trim();
+
+  if(cart.length === 0) { showNotif(t.errCart,'#e74c3c'); return; }
+  if(!name)             { showNotif(t.errName,'#e74c3c'); return; }
+
+  let msg = '🇧🇷 *'+t.msgHeader+'* 🇧🇷\n';
+  msg += '━━━━━━━━━━━━━━━━\n';
+  msg += '👤 *'+t.msgName+':* '+name+'\n';
+  if(phone)   msg += '📞 *'+t.msgPhone+':* '+phone+'\n';
+  if(address) msg += '📍 *'+t.msgAddress+':* '+address+'\n';
+  msg += '━━━━━━━━━━━━━━━━\n';
+
+  let grandSum = 0;
+  cart.forEach((item, i) => {
+    grandSum += item.total;
+    msg += '\n🥤 *'+t.bowl+' '+(i+1)+' — '+item.size+'*\n';
+    if(item.fruits.length)   msg += '  🍓 '+t.msgFruits+': '+item.fruits.join(', ')+'\n';
+    if(item.toppings.length) msg += '  🌾 '+t.msgToppings+': '+item.toppings.join(', ')+'\n';
+    if(item.sauces.length)   msg += '  🍯 '+t.msgSauces+': '+item.sauces.join(', ')+'\n';
+    if(item.extras.length)   msg += '  ⭐ '+t.msgExtras+': '+item.extras.join(', ')+'\n';
+    if(item.note)            msg += '  📝 '+t.msgNote+': '+item.note+'\n';
+    msg += '  💵 $'+item.total.toFixed(2)+'\n';
+  });
+
+  msg += '\n━━━━━━━━━━━━━━━━\n';
+  if(orderNote) msg += '📋 *'+t.msgOrderNote+':* '+orderNote+'\n';
+  msg += '💰 *'+t.msgTotal+': $'+grandSum.toFixed(2)+'*\n';
+
+  const big16 = cart.filter(b => b.size==='16oz').length;
+  if(big16 >= 3) msg += '🎉 *'+t.msgPromo+'*\n';
+
+  msg += '\n'+t.msgThanks+' 🙏';
+
+  showNotif(t.notifSent,'#1a6b2a');
+  setTimeout(()=>window.open('https://wa.me/'+PHONE+'?text='+encodeURIComponent(msg),'_blank'),600);
+}
+
+// ─── TOAST ───────────────────────────────────────────────────
+function showNotif(msg, color) {
+  const n = document.getElementById('notif');
+  n.textContent = msg;
+  n.style.background = color||'#1a6b2a';
+  n.classList.add('show');
+  setTimeout(()=>n.classList.remove('show'),3000);
+}
+</script>
+</body>
+</html>
